@@ -12,7 +12,18 @@ export function FocusedPhotoViewer() {
   const nextPhoto = useStore((state) => state.nextPhoto);
 
   const [currentTexture, setCurrentTexture] = useState<THREE.Texture | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const { camera } = useThree();
+
+  // 检测是否是移动端
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // 加载当前聚焦的照片纹理
   useEffect(() => {
@@ -64,8 +75,8 @@ export function FocusedPhotoViewer() {
 
     const shouldShow = handOpen && focusedPhotoIndex >= 0 && currentTexture !== null;
     
-    // 缩放动画
-    const targetScale = shouldShow ? 4 : 0.01;
+    // 缩放动画 - 移动端用更小的尺寸
+    const targetScale = shouldShow ? (isMobile ? 2 : 4) : 0.01;
     const currentScale = meshRef.current.scale.x;
     const newScale = currentScale + (targetScale - currentScale) * 0.1;
     meshRef.current.scale.set(newScale, newScale, newScale);
