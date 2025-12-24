@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Scene } from './components/Scene';
 import { GestureDetector } from './components/GestureDetector';
 import { MusicPlayer } from './components/MusicPlayer';
@@ -52,6 +52,7 @@ const LOCAL_PHOTOS = [
 
 function App() {
   const setPhotos = useStore((state) => state.setPhotos);
+  const [started, setStarted] = useState(false);
 
   // 初始化照片
   useEffect(() => {
@@ -59,6 +60,24 @@ function App() {
       setPhotos(LOCAL_PHOTOS);
     }
   }, [setPhotos]);
+
+  // 开始界面
+  if (!started) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="glass-panel p-8 text-center">
+          <h1 className="gold-text text-4xl font-bold mb-6 glow">🎄 豪华互动圣诞树</h1>
+          <p className="text-gray-300 mb-6">点击开始体验神奇的圣诞魔法</p>
+          <button
+            onClick={() => setStarted(true)}
+            className="btn-gold text-xl px-8 py-4"
+          >
+            ✨ 开始体验
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-full relative">
