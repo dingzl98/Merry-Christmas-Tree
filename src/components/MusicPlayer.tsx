@@ -19,7 +19,18 @@ export function MusicPlayer() {
     return treeState === 'CHAOS' ? formedAudioRef.current : chaosAudioRef.current;
   };
 
-  // 状态切换时切换音乐
+  // 初始化时立即播放
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        const audio = getCurrentAudio();
+        if (audio && isPlaying) {
+          audio.play().catch(console.error);
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }, []);
+  
+    // 状态切换时切换音乐
   useEffect(() => {
     const currentAudio = getCurrentAudio();
     const otherAudio = getOtherAudio();
