@@ -47,6 +47,16 @@ body,
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
+/* 手机端适配 */
+@media (max-width: 768px) {
+  .camera-container {
+    width: 120px;
+    height: 90px;
+    bottom: 100px;
+    right: 10px;
+  }
+}
+
 .camera-container video,
 .camera-container canvas {
   width: 100%;

@@ -24,20 +24,19 @@ export function GestureDetector() {
 
   // 检测手是否张开
   const detectHandOpen = (landmarks: HandLandmark[]): boolean => {
-    const palmCenter = landmarks[9]; // 中指根部
-    const fingerTips = [4, 8, 12, 16, 20]; // 五指指尖索引
-
-    let totalDistance = 0;
-    fingerTips.forEach((tipIdx) => {
-      const tip = landmarks[tipIdx];
-      const distance = Math.sqrt(
-        Math.pow(tip.x - palmCenter.x, 2) + Math.pow(tip.y - palmCenter.y, 2)
-      );
-      totalDistance += distance;
-    });
-
-    const avgDistance = totalDistance / fingerTips.length;
-    return avgDistance > 0.15; // 阈值
+    // 检测每根手指是否伸开
+    // 食指伸开：指尖(8)比中节(6)更高
+    const indexUp = landmarks[8].y < landmarks[6].y;
+    // 中指伸开
+    const middleUp = landmarks[12].y < landmarks[10].y;
+    // 无名指伸开
+    const ringUp = landmarks[16].y < landmarks[14].y;
+    // 小指伸开
+    const pinkyUp = landmarks[20].y < landmarks[18].y;
+    
+    // 至少3根手指伸开就认为是张开状态
+    const fingersUp = [indexUp, middleUp, ringUp, pinkyUp].filter(Boolean).length;
+    return fingersUp >= 3;
   };
 
   // 检测"爱你"手势（大拇指、食指、小拇指竖起，中指和无名指弯曲）

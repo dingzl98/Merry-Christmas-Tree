@@ -113,11 +113,11 @@ export function MusicPlayer() {
       />
 
       {/* 底部音乐控制栏 */}
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 glass-panel px-6 py-3 flex items-center gap-4 z-50">
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 glass-panel px-3 py-2 md:px-6 md:py-3 flex items-center gap-2 md:gap-4 z-50 max-w-[95vw]">
         {/* 播放/暂停按钮 */}
         <button
           onClick={togglePlay}
-          className="w-10 h-10 rounded-full bg-gold-luxury text-black flex items-center justify-center hover:scale-110 transition-transform"
+          className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gold-luxury text-black flex items-center justify-center hover:scale-110 transition-transform flex-shrink-0"
         >
           {isPlaying ? (
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -132,13 +132,13 @@ export function MusicPlayer() {
         </button>
 
         {/* 当前播放的音乐名称 */}
-        <div className="text-gold-luxury text-sm min-w-[100px]">
+        <div className="text-gold-luxury text-xs md:text-sm min-w-[60px] md:min-w-[100px] truncate">
           {treeState === 'CHAOS' ? '🌀 天外来物' : '🎄 Merry Christmas'}
         </div>
 
         {/* 进度条 */}
-        <div className="flex items-center gap-2">
-          <span className="text-gray-400 text-xs w-10">{formatTime(currentTime)}</span>
+        <div className="flex items-center gap-1 md:gap-2">
+          <span className="text-gray-400 text-xs w-8 md:w-10">{formatTime(currentTime)}</span>
           <input
             type="range"
             min="0"
@@ -146,9 +146,9 @@ export function MusicPlayer() {
             value={currentTime}
             onChange={handleSeek}
             onClick={(e) => e.stopPropagation()}
-            className="w-40 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-gold-luxury"
+            className="w-20 md:w-40 h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-gold-luxury"
           />
-          <span className="text-gray-400 text-xs w-10">{formatTime(duration)}</span>
+          <span className="text-gray-400 text-xs w-8 md:w-10">{formatTime(duration)}</span>
         </div>
       </div>
     </>
