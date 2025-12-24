@@ -22,6 +22,11 @@ export function GestureDetector() {
   const handOpen = useStore((state) => state.handOpen);
   const showHearts = useStore((state) => state.showHearts);
 
+  // 手动切换状态
+  const toggleHandState = () => {
+    setHandOpen(!handOpen);
+  };
+
   // 检测手是否张开
   const detectHandOpen = (landmarks: HandLandmark[]): boolean => {
     // 检测每根手指是否伸开
@@ -193,9 +198,10 @@ export function GestureDetector() {
         }}
       />
       
-      {/* 状态指示器 */}
+      {/* 状态指示器 - 可点击切换 */}
       <div
-        className={`status-indicator absolute bottom-2 left-2 ${
+        onClick={toggleHandState}
+        className={`status-indicator absolute bottom-2 left-2 cursor-pointer active:scale-95 ${
           showHearts ? 'status-love' : handOpen ? 'status-open' : 'status-closed'
         }`}
       >
